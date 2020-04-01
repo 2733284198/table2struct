@@ -7,11 +7,12 @@ Forked from: <https://github.com/jiazhoulvke/table2struct>
 - 支持MySQL 8.0
 - 支持Struct中的JSON tag的命名风格设置
 - TableName使用指针方法
+- 注释符号后面添加空格
 
 ## 安装 ##
 
 ```bash
-go get github.com/axiaoxin/table2struct
+go get github.com/axiaoxin-com/table2struct
 ```
 
 ## 使用说明 ##
@@ -68,7 +69,7 @@ CREATE TABLE `user` (
 ```go
 package models
 
-//User user
+// User user
 type User struct {
 	ID       int    `json:"id"`
 	Username string `json:"username"`
@@ -79,7 +80,7 @@ type User struct {
 	Status   int8   `json:"status"`
 }
 
-//TableName user
+// TableName user
 func (t *User) TableName() string {
 	return "user"
 }
