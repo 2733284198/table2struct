@@ -419,12 +419,12 @@ package %s
 
 %s
 
-//%s %s
+// %s %s
 type %s struct {
 %s
 }
 
-//TableName %s
+// TableName %s
 func (t *%s) TableName() string {
 	return "%s"
 }`
@@ -443,7 +443,7 @@ func toStruct(table Table) string {
 			hasExtNullType = true
 		}
 		if field.Comment != "" {
-			buf.WriteString("//" + toGoName(field.Name, table.Name) + " " + field.Comment + "\n")
+			buf.WriteString("// " + toGoName(field.Name, table.Name) + " " + field.Comment + "\n")
 		}
 		buf.WriteString(toGoName(field.Name, table.Name) + "\t" + field.Type)
 		tags := make([]string, 0)
