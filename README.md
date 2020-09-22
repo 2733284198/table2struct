@@ -1,29 +1,29 @@
-# table2struct #
+# table2struct
 
 Forked from: <https://github.com/jiazhoulvke/table2struct>
 
 更新特性:
 
-- 支持MySQL 8.0
-- 支持Struct中的JSON tag的命名风格设置
-- TableName使用指针方法
+- 支持 MySQL 8.0
+- 支持 Struct 中的 JSON tag 的命名风格设置
+- TableName 使用指针方法
 - 注释符号后面添加空格
 
-## 安装 ##
+## 安装
 
 ```bash
 go get github.com/axiaoxin-com/table2struct
 ```
 
-## 使用说明 ##
+## 使用说明
 
 ```
-table2struct --tag_gorm --tag_sqlx --db_host localhost --db_port 3306 --db_user root --db_pwd pwd --db_name db
+table2struct --tag_gorm --tag_sqlx --db_host localhost --db_port 3306 --db_user root --db_pwd pwd --db_name db [tablename]
 ```
 
-### 基本应用 ###
+### 基本应用
 
-先来看看table2struct支持的参数:
+先来看看 table2struct 支持的参数:
 
 ```
 Usage of table2struct:
@@ -49,7 +49,9 @@ Usage of table2struct:
       --tag_xorm_type         是否将type包含进xorm的tag (default true)
 ```
 
-比如你有一个名叫mydatabase的数据库，里面有一个user表：
+命令最后可以加表名来指定导出某些表，不加导出全部
+
+比如你有一个名叫 mydatabase 的数据库，里面有一个 user 表：
 
 ```sql
 CREATE TABLE `user` (
@@ -64,7 +66,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB;
 ```
 
-通过运行`table2struct --db_name mydatabase`就可以生成一个user.go文件:
+通过运行`table2struct --db_name mydatabase user`就可以生成一个 user.go 文件:
 
 ```go
 package models
@@ -86,16 +88,16 @@ func (t *User) TableName() string {
 }
 ```
 
+
 介绍几个需要注意的参数：
 
 - `--int64`
- 强制把所有整型字段全部声明为int64,比如上面示例中的Status为`Status int8`,加入参数--int64=true后，生成的字段就会是`Status int64`
+  强制把所有整型字段全部声明为 int64,比如上面示例中的 Status 为`Status int8`,加入参数--int64=true 后，生成的字段就会是`Status int64`
 - `--tag_json`
- 默认启用，会在struct的tag里增加`json:"字段名"`
-- 同理，`--tag_sqlx`、`--tag_xorm`、`--tag_gorm`可以分别生成对应框架需要的tag
+  默认启用，会在 struct 的 tag 里增加`json:"字段名"`
+- 同理，`--tag_sqlx`、`--tag_xorm`、`--tag_gorm`可以分别生成对应框架需要的 tag
 
-
-### 转换结果查询 ###
+### 转换结果查询
 
 假如你还不想真正生成字段，只是想预览一下数据库里的字段会变成什么名字，就可以用`table2struct --query [表名.]字段名` 进行查询，比如：
 
@@ -105,10 +107,9 @@ $ table2struct --query table1.foo
 table1.foo => table1.Foo
 ```
 
+### 字段映射
 
-### 字段映射 ###
-
-有时对于一些自动转换的字段名不满意，比如user表中有一个username字段，自动转换出来的将会是Username,但我想要它转成UserName，那该怎么办呢？这时就可以通过`--mapping`参数来强制将username转换成UserName。
+有时对于一些自动转换的字段名不满意，比如 user 表中有一个 username 字段，自动转换出来的将会是 Username,但我想要它转成 UserName，那该怎么办呢？这时就可以通过`--mapping`参数来强制将 username 转换成 UserName。
 
 ```bash
 $ table2struct --mapping username:UserName --query username
@@ -146,7 +147,7 @@ $ table2struct --mapping_file mapping.txt --query foo
 foo => bar
 ```
 
-### 处理前缀 ###
+### 处理前缀
 
 有时我们的表名都带有统一的前缀，比如:
 
@@ -154,9 +155,8 @@ foo => bar
 > google_table2
 > google_table3
 
-这时生成的文件名是google_table1.go，结构名是GoogleTable1。然而我们需要它生成的文件名是table1.go，结构名是Table1，这时就可以用到`--table_prefix`这个参数了
+这时生成的文件名是 google_table1.go，结构名是 GoogleTable1。然而我们需要它生成的文件名是 table1.go，结构名是 Table1，这时就可以用到`--table_prefix`这个参数了
 
 ```bash
 $ table2struct --table_prefix google_
 ```
-
