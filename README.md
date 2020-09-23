@@ -6,7 +6,6 @@ Forked from: <https://github.com/jiazhoulvke/table2struct>
 
 - 支持 MySQL 8.0
 - 支持 Struct 中的 JSON tag 的命名风格设置
-- TableName 使用指针方法
 - 注释符号后面添加空格
 - 修复 db 中存在视图时无法生成代码的问题
 - 修复存在 enum 类型的字段无法生成代码的问题
