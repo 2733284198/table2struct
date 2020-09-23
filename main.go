@@ -493,6 +493,8 @@ func toStruct(table Table) string {
 		buf.WriteRune('\n')
 	}
 	tableGoName := toGoName(table.Name, table.Name)
+	// 表名中存在 . 则替换为 _
+	tableGoName = strings.Replace(tableGoName, ".", "_", -1)
 	importString := "\n"
 	imports := make([]string, 0, 2)
 	if table.HasTime {
@@ -688,6 +690,8 @@ func goType(dbType string, isNullAble bool) (goType string, isNullType bool, IsE
 			return "nulltype.NullTime", false, true
 		}
 		return "time.Time", false, false
+	case "enum":
+		return "string", false, false
 	default:
 		panic("未知类型:" + dbType)
 	}
