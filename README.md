@@ -1,5 +1,8 @@
 # table2struct
 
+[![GitHub All Releases](https://img.shields.io/github/downloads/axiaoxin-com/table2struct/total)](https://github.com/axiaoxin-com/table2struct/releases)
+
+
 Forked from: <https://github.com/jiazhoulvke/table2struct>
 
 更新特性:
